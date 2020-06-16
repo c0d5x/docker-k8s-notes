@@ -1,0 +1,17 @@
+FROM maven:3.6-jdk-11
+
+WORKDIR /usr/src/app
+
+COPY app_dir .
+
+ENV APP_ENV qa
+ENV LANG us_US.utf8
+
+RUN mvn -v
+RUN mvn compile
+RUN mvn test
+RUN mvn package
+
+ENTRYPOINT ["script_to_prepare_environment.sh"]
+CMD ["mvn", "exec:java", "-Dexec.mainClass=com.example.App"]
+EXPOSE 8000

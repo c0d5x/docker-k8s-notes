@@ -1,0 +1,22 @@
+FROM python:3
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+# COPY app_dir .
+
+ENV APPENV qa
+ENV APPMIN 10
+ENV APPLOG debug
+
+LABEL product=machinelearning
+LABEL license=open
+LABEL com.example.version=7
+
+CMD ["python", "start_app.py"]
+
+EXPOSE 80
+# EXPOSE 8080
