@@ -139,5 +139,3 @@ kubectl create secret docker-registry aws-ecr-credentials \
 spec:
   imagePullSecrets:
     - name: aws-ecr-credentials
-
-
