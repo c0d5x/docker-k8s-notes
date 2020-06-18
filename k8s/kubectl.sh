@@ -54,9 +54,10 @@ kubectl get pods --show-labels
 kubectl get pods --all-namespaces
 kubectl get pods -o wide
 kubectl get pods --sort-by='.status.containerStatuses[0].restartCount'
-kubectl describe pod mypod
+kubectl get pods --field-selector=status.phase=Running
 kubectl get pod,svc -n kubernetes-dashboard
 kubectl get pod,svc --all-namespaces
+kubectl describe pod mypod
 kubectl delete pod mypod
 
 kubectl top pods --sort-by=cpu --all-namespaces
@@ -95,4 +96,48 @@ kubectl delete pods,services -l name=mylabel
 kubectl -n mynamespace delete pod,svc --all
 # Delete all pods matching the awk pattern1 or pattern2
 kubectl get pods -n mynamespace --no-headers=true|awk '/pattern1|pattern2/{print $1}'|xargs kubectl delete -n mynamespace pod
+
+# Updating & Rollout
+kubectl set image deployment/frontend www=image:v2
+kubectl rollout history deployment/frontend
+kubectl rollout undo deployment/frontend
+kubectl rollout undo deployment/frontend --to-revision=2
+kubectl rollout status -w deployment/frontend
+kubectl rollout restart deployment/frontend
+
+# Docker secret
+# DOCKER_REGISTRY_SERVER: https://index.docker.io/v1/ for DockerHub
+kubectl create secret docker-registry NAME \
+  --docker-server=DOCKER_REGISTRY_SERVER \
+  --docker-username=DOCKER_USER \
+  --docker-password=DOCKER_PASSWORD \
+  --docker-email=DOCKER_EMAIL
+
+kubectl get secret NAME --output=yaml
+
+# deployment using the secret creds
+apiVersion: v1
+kind: Pod
+metadata:
+  name: private-reg
+spec:
+  imagePullSecrets:
+  - name: NAME
+  containers:
+  - name: private-reg-container
+    image: your-private-image
+
+# docker registry using AWS
+kubectl create secret docker-registry aws-ecr-credentials \
+--docker-server=$ECR_REGISTRY \
+--docker-username=AWS \
+--docker-password=$(aws ecr get-login | awk '{print $6}') \
+--docker-email=$IAM_EMAIL \
+--namespace=$KUBE_NAMESPACE
+
+# then in deployment.yml
+spec:
+  imagePullSecrets:
+    - name: aws-ecr-credentials
+
 
