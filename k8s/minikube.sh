@@ -23,3 +23,7 @@ minikube addons list
 minikube addons enable metrics-server
 minikube addons enable dashboard
 
+kubectl expose deployment nginx-deployment --type=NodePort --name=nginx-deployment
+minikube service list
+minikube service nginx-deployment
+minikube service nginx-deployment --url

@@ -1,5 +1,7 @@
+export KUBE_EDITOR="vim"
 kubectl config view
 kubectl cluster-info
+
 
 # deployment
 kubectl apply -f ./mydeploymentfile.yml
@@ -9,6 +11,7 @@ kubectl create deployment nginx --image=nginx
 kubectl get deployment mydeployment
 kubectl describe deployment mydeployment
 kubectl delete deployment mydeployment
+kubectl edit deployment mydeployment
 kubectl expose deployment mydeployment --type=LoadBalancer --name=mydeployment
 
 kubectl autoscale deployment mydeployment --min=2 --max=10
@@ -99,6 +102,7 @@ kubectl get pods -n mynamespace --no-headers=true|awk '/pattern1|pattern2/{print
 
 # Updating & Rollout
 kubectl set image deployment/frontend www=image:v2
+kubectl set image deployment nginx-deployment nginx=nginx:1.12.1
 kubectl rollout history deployment/frontend
 kubectl rollout undo deployment/frontend
 kubectl rollout undo deployment/frontend --to-revision=2
