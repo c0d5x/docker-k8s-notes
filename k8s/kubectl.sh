@@ -10,9 +10,10 @@ kubectl create deployment nginx --image=nginx
 
 kubectl get deployment mydeployment
 kubectl describe deployment mydeployment
-kubectl delete deployment mydeployment
 kubectl edit deployment mydeployment
 kubectl expose deployment mydeployment --type=LoadBalancer --name=mydeployment
+kubectl delete deployment mydeployment
+kubectl delete pods,services,deployments -l app=jenkins --namespace techops-jenkins
 
 kubectl autoscale deployment mydeployment --min=2 --max=10
 
@@ -34,6 +35,7 @@ kubectl get pod,svc -n kubernetes-dashboard
 kubectl get pod,svc --all-namespaces
 kubectl describe services
 kubectl delete service mydeployment
+kubectl delete pods,services,deployments -l app=jenkins --namespace techops-jenkins
 
 # logs
 kubectl logs -l app=nginx
@@ -62,6 +64,8 @@ kubectl get pod,svc -n kubernetes-dashboard
 kubectl get pod,svc --all-namespaces
 kubectl describe pod mypod
 kubectl delete pod mypod
+kubectl delete pods,services -l app=jenkins --namespace techops-jenkins
+kubectl delete pods,services,deployments -l app=jenkins --namespace techops-jenkins
 
 kubectl top pods --sort-by=cpu --all-namespaces
 kubectl top pods --sort-by=memory --all-namespaces

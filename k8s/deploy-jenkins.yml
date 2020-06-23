@@ -1,21 +1,39 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: techops-jenkins
+  labels:
+    app: jenkins
+    team: techops
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jenkins-deployment
+  namespace: techops-jenkins
   labels:
     app: jenkins
+    team: techops
+    env: qa
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: jenkins
+      team: techops
+      env: qa
   template:
     metadata:
+      namespace: techops-jenkins
       labels:
         app: jenkins
+        team: techops
+        env: qa
     spec:
       containers:
       - name: jenkins
         image: jenkins/jenkins:lts
         ports:
         - containerPort: 8080
+        - containerPort: 50000
