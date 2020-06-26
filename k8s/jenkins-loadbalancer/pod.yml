@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-deployment
+  namespace: techops-jenkins
+  labels:
+    app: jenkins
+    team: techops
+    env: qa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+      team: techops
+      env: qa
+  template:
+    metadata:
+      namespace: techops-jenkins
+      labels:
+        app: jenkins
+        team: techops
+        env: qa
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      volumes:
+      - name: jenkins-pv-claim
+        persistentVolumeClaim:
+          claimName: jenkins-pv-claim
+      containers:
+      - name: jenkins
+        image: jenkins/jenkins:lts
+        volumeMounts:
+          - name: jenkins-pv-claim
+            mountPath: /var/jenkins_home
+        ports:
+        - containerPort: 8080
+        - containerPort: 50000

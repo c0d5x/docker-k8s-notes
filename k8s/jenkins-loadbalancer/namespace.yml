@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: techops-jenkins
+  labels:
+    app: jenkins
+    team: techops

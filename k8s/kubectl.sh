@@ -49,6 +49,8 @@ kubectl logs nginx-78f5d695bd-czm8z --since-time=2019-11-01T15:00:00Z
 # events
 kubectl get events
 kubectl get events --sort-by=.metadata.creationTimestamp
+kubectl get events --sort-by='{.firstTimestamp}'
+kubectl get events --sort-by='{.lastTimestamp}'
 kubectl get events mypod.timestamp
 
 # labels
