@@ -1,0 +1,4 @@
+
+kubectl apply -f kube-system-admin.yml
+kubectl describe secret admin -n kube-system
+# copy the token, use it to login into the dashboard

@@ -34,3 +34,11 @@ docker container run --name appname --rm --detach \
   --volume my-data:/var/my-data \
   --volume "$HOME":/home \
   appimagename:tag
+
+# export / dump the contents of a container
+docker export -o container-fs.tar "containerid"
+mkdir container-fs-root
+tar -C container-fs-root -xvf container-fs.tar
+
+
+
