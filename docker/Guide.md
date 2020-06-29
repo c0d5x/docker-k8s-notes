@@ -10,7 +10,7 @@ It is like having a VM ready for you to setup your application and libraries.
 ![Virtual Machine architecture](file://./imgs/arch-vms.png "Virtual Machine Architecture")
 
 ### Docker containers
-![Docker Container architecture](file://./imgs/arch-docker.png "Docker Container Architecture")
+![Docker Container architecture](https://github.com/c0d5x/docker-k8s-notes/blob/master/docker/imgs/arch-docker.png?raw=true)
 
 
 ## Image vs Container
