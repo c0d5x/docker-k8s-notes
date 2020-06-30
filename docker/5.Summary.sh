@@ -3,6 +3,18 @@
 docker run hello-world:latest
 docker run -it ubuntu bash
 
+# limit the resources, generate oom
+docker run --rm -it --cpus 2 --memory 128M progrium/stress \
+  --cpu 3 --io 1 --vm 2 --vm-bytes 68M
+
+# more options
+# privileged: can run docker inside docker
+docker container run --name appname --rm --detach \
+  --privileged --network mynetwork --network-alias dnsname \
+  --env SOMEENV=SOMEVAL \
+  --volume my-data:/var/my-data \
+  appimagename:tag
+
 # List running containers
 docker ps
 
