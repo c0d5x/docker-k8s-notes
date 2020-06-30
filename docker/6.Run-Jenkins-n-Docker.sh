@@ -19,4 +19,5 @@ docker container run --name jenkins-tutorial --rm --detach \
   --publish 8080:8080 jenkinsci/blueocean
 
 # show the admin password to start jenkins
-# docker exec jenkins-tutorial cat /var/jenkins_home/secrets/initialAdminPassword
+echo "And the password is..."
+docker exec jenkins-tutorial cat /var/jenkins_home/secrets/initialAdminPassword
