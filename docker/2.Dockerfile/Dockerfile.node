@@ -1,0 +1,17 @@
+FROM node:0.10
+MAINTAINER John Doe <john@example.com>
+USER root
+
+ENV AP /data/app
+ENV SCPATH /etc/supervisor/conf.d
+
+RUN apt-get -y update
+
+RUN apt-get -y install supervisor
+RUN mkdir -p /var/log/supervisor
+
+ADD ./supervisor/conf.d/* $SCPATH
+
+WORKDIR $AP
+RUN npm install
+CMD ["supervisord", "-n"]
