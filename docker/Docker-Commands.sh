@@ -17,6 +17,7 @@ docker exec "container" cat /etc/passwd
 
 # Stop a container
 docker stop "container"
+docker kill "container"
 
 # Create a network
 docker network create mynetwork
@@ -40,5 +41,11 @@ docker export -o container-fs.tar "containerid"
 mkdir container-fs-root
 tar -C container-fs-root -xvf container-fs.tar
 
+# Clean up
+docker system prune
 
+# Disk space
+docker system df
 
+# Info
+docker system info
