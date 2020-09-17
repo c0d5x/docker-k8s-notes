@@ -12,7 +12,7 @@ kubectl get deployment mydeployment
 kubectl describe deployment mydeployment
 kubectl edit deployment mydeployment
 kubectl expose deployment mydeployment --type=LoadBalancer --name=mydeployment
-kubectl delete deployment mydeployment
+kubectl delete deployment mydeployment --grace-period=0 --force
 kubectl delete pods,services,deployments -l app=jenkins --namespace techops-jenkins
 
 kubectl autoscale deployment mydeployment --min=2 --max=10
@@ -34,7 +34,7 @@ kubectl get services --sort-by=.metadata.name
 kubectl get pod,svc -n kubernetes-dashboard
 kubectl get pod,svc --all-namespaces
 kubectl describe services
-kubectl delete service mydeployment
+kubectl delete service mydeployment --grace-period=0 --force
 kubectl delete pods,services,deployments -l app=jenkins --namespace techops-jenkins
 
 # logs
