@@ -1,0 +1,41 @@
+rke up --config rancher-config.yml
+export KUBECONFIG=$(pwd)/kube_config_rancher-cluster.yml
+
+# add rancher repo
+helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+
+# create rancher namespace
+kubectl create namespace cattle-system
+
+# install cert-manager crds
+kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.4/cert-manager.crds.yaml
+
+# create namespace for cert-manager
+kubectl create namespace cert-manager
+
+# add jetstack repo
+helm repo add jetstack https://charts.jetstack.io
+
+# update to get jetstack and racher repo's info
+helm repo update
+
+# install cert-manager
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --version v1.0.4
+# verify installation
+kubectl get pods --namespace cert-manager
+
+# install rancher with letsencrypt certs
+# create LB forwarding 80, 443, 6443 to rancher ec2 instances
+# create route 53 for choosen name
+# rancher-test.rcrtx.us
+helm install rancher rancher-latest/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher-test.rcrtx.us \
+  --set ingress.tls.source=letsEncrypt \
+  --set letsEncrypt.email=jose.hidalgo@xogito.com
+
+# table comparing cluster support in rancher
+# https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/

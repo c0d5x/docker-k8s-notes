@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-streaming
+spec:
+  selector:
+    matchLabels:
+      app: nginx-streaming
+  template:
+    metadata:
+      labels:
+        app: nginx-streaming
+    spec:
+      containers:
+        - image: nginx
+          name: nginx-streaming
+          ports:
+            - containerPort: 80
+              name: http
+---
+# https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-streaming
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: feature123.streaming.idun.recruitics.com
+    external-dns.alpha.kubernetes.io/ttl: "60"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      name: http
+      targetPort: 80
+  selector:
+    app: nginx-streaming

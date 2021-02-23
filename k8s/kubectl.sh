@@ -76,8 +76,13 @@ kubectl exec mypod -- ls /
 # when pod has more than one container
 kubectl exec -i -t mypod --container main-app -- /bin/bash
 
+# run a specific image
 kubectl run -i --tty busybox --image=busybox -- sh
 kubectl run nginx --image=nginx --restart=Never -n mynamespace
+
+# run an ubuntu pod for troubleshooting
+kubectl run -i --tty ubuntu --image=ubuntu -- /bin/bash
+kubectl attach ubuntu -c ubuntu -it
 
 
 # replicasets
@@ -132,10 +137,10 @@ metadata:
   name: private-reg
 spec:
   imagePullSecrets:
-  - name: NAME
+    - name: NAME
   containers:
-  - name: private-reg-container
-    image: your-private-image
+    - name: private-reg-container
+      image: your-private-image
 
 # docker registry using AWS
 kubectl create secret docker-registry aws-ecr-credentials \
@@ -149,3 +154,12 @@ kubectl create secret docker-registry aws-ecr-credentials \
 spec:
   imagePullSecrets:
     - name: aws-ecr-credentials
+
+
+# cluster and context
+kubectl config get-clusters
+kubectl config get-contexts
+kubectl config current-context
+kubectl config use-context my-cluster-name
+kubectl config set-context --current --namespace=ggckad-s2
+kubectl config view -o jsonpath='{.users[*].name}'

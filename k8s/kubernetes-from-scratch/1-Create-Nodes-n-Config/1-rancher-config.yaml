@@ -1,0 +1,24 @@
+---
+ssh_key_path: ~/.ssh/kubernetes
+nodes:
+  - address: 3.137.200.31
+    internal_address: 172.31.14.245
+    user: centos
+    role: [controlplane, worker, etcd]
+  - address: 3.137.216.236
+    internal_address: 172.31.4.160
+    user: centos
+    role: [controlplane, worker, etcd]
+
+services:
+  etcd:
+    snapshot: true
+    creation: 6h
+    retention: 24h
+
+# Required for external TLS termination with
+# ingress-nginx v0.22+
+ingress:
+  provider: nginx
+  options:
+    use-forwarded-headers: "true"

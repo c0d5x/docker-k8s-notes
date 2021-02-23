@@ -1,6 +1,7 @@
 
 # install rke
 # https://github.com/rancher/rke/releases/latest
+# https://rancher.com/docs/rke/latest/en/os/
 
 # install kubectl
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/

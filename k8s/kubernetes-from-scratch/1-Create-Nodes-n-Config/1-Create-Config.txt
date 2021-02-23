@@ -1,0 +1,1 @@
+Edit the 1-rancher-config.yaml with the public and private IPs of the nodes in the cluster

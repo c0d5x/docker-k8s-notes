@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-test
+spec:
+  selector:
+    matchLabels:
+      app: nginx-test
+  template:
+    metadata:
+      labels:
+        app: nginx-test
+    spec:
+      containers:
+        - image: nginx
+          name: nginx-test
+          ports:
+            - containerPort: 80
+              name: http
+---
+# https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-test
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: nginx.idun.recruitics.com
+    external-dns.alpha.kubernetes.io/ttl: "60"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      name: http
+      targetPort: 80
+  selector:
+    app: nginx-test

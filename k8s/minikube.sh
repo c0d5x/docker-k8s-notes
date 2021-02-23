@@ -27,3 +27,9 @@ kubectl expose deployment nginx-deployment --type=NodePort --name=nginx-deployme
 minikube service list
 minikube service nginx-deployment
 minikube service nginx-deployment --url
+
+
+# Create deployment and expose with load balancer locally
+kubectl create deployment hello-node --image=k8s.gcr.io/echoserver:1.4
+kubectl expose deployment hello-node --type=LoadBalancer --port=8080
+minikube service hello-node

@@ -1,0 +1,6 @@
+Run `rke up --config 1-rancher-config.yaml` to get a plain kubernetes cluster
+
+Then configure `kubectl`
+export KUBECONFIG=kube_config_1-rancher-config.yaml
+
+kubectl cluster-info

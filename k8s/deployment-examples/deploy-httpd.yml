@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,7 +16,7 @@ spec:
         app: httpd
     spec:
       containers:
-      - name: httpd
-        image: httpd:2.4-alpine
-        ports:
-        - containerPort: 80
+        - name: httpd
+          image: httpd:2.4-alpine
+          ports:
+            - containerPort: 80

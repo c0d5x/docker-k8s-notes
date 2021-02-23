@@ -1,0 +1,7 @@
+Deploy issuers
+
+# deploy the self signed ClusterIssuer
+kubectl apply -f 5-selfsigned.yaml
+
+# generate a certificate with the SelfSigned ClusterIssuer
+kubectl apply -f 5-selfsigned-cert.yaml
